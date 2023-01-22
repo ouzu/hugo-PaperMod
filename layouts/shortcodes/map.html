@@ -1,0 +1,32 @@
+{{ if .IsNamedParams }}
+
+{{ $mapLat := default "" (.Get "mapLat") }}
+{{ $mapLon := default "" (.Get "mapLon") }}
+{{ $zoom := default "13" (.Get "zoom") }}
+{{ $mapWidth := default "100%" (.Get "mapWidth") }}
+{{ $mapHeight := default "400px" (.Get "mapHeight") }}
+{{ $mapId := default (md5 (printf "%s%s" $mapLat $mapLon)) (.Get "mapId") }}
+{{ $scrollWheelZoom := default "true" (.Get "scrollWheelZoom") }}
+
+<div class="map">
+  <div id='mapid_{{ $mapId }}' style='width: {{ $mapWidth }}; height: {{ $mapHeight}}; border-radius: 4px;'></div>
+  <p class="attribution">Daten von <a href="https://www.openstreetmap.org/">OpenStreetMap</a> - Veröffentlicht unter <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a></p>
+</div>
+
+<script>
+    leaflet_maps['mapid_{{ $mapId }}'] = new L.Map("mapid_{{ $mapId }}", {
+      center: new L.LatLng({{ $mapLat }}, {{ $mapLon }}),
+      zoom: {{ $zoom }},
+      zoomControl: false,
+      attributionControl: false,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(leaflet_maps['mapid_{{ $mapId }}']);
+</script>
+{{.Inner}}
+
+{{ else }}
+{{ errorf "Leaflet Hugo Shortcode: please provide named Parameters" }}
+{{ end }}

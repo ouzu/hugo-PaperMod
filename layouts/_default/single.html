@@ -1,5 +1,9 @@
 {{- define "main" }}
 
+{{ if .HasShortcode "map" }}
+    {{ partial "leaflet" . }}
+{{ end }}
+
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}

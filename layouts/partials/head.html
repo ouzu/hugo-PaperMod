@@ -35,6 +35,10 @@
 {{- if site.Params.analytics.naver.SiteVerificationTag }}
 <meta name="naver-site-verification" content="{{ site.Params.analytics.naver.SiteVerificationTag }}">
 {{- end }}
+{{- if site.Params.noindex }}
+<meta name="robots" content="noindex" />
+<meta name="robots" content="nofollow" />
+{{- end }}
 
 {{- /* Styles */}}
 
