@@ -93,6 +93,11 @@
 {{- end }}
 {{- end -}}
 
+{{- /* Plausible */}}
+{{- if site.Params.analytics.plausible.enable }}
+<script defer data-domain="{{ site.Params.analytics.plausible.dataDomain }}" src="https://{{ site.Params.analytics.plausible.plausibleDomain }}/js/script.js"></script>
+{{- end }}
+
 {{- /* Highlight.js */}}
 {{- $isHLJSdisabled := (site.Params.assets.disableHLJS | default .Params.disableHLJS ) }}
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (not $isHLJSdisabled)) }}
